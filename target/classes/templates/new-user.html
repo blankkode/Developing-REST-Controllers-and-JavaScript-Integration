@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add New User</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div th:fragment="content1">
+    <h3>Add New User</h3>
+    <form id="newUserForm">
+        <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input type="text" class="form-control" id="firstName" name="firstName" required>
+        </div>
+        <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input type="text" class="form-control" id="lastName" name="lastName" required>
+        </div>
+        <div class="form-group">
+            <label for="age">Age</label>
+            <input type="number" class="form-control" id="age" name="age" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" name="password" required>
+        </div>
+        <div class="form-group">
+            <label for="roles">Role</label>
+            <select multiple class="form-control" id="roles" name="roles">
+                <option id="2" value="1">ADMIN</option>
+                <option id="1" value="2">USER</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-success">Add new user</button>
+    </form>
+</div>
+<script>
+    document.getElementById('newUserForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        const formData = new FormData(this);
+
+        const jsonData = {};
+
+        formData.forEach((value, key) => {
+            if (key === "roles") {
+                if (!jsonData[key]) {
+                    jsonData[key] = [];
+                }
+                jsonData[key].push({"id":parseInt(value)}); // Assuming roles are sent as their IDs
+            } else {
+                jsonData[key] = value;
+            }
+        });
+
+        console.log("jsonData",JSON.stringify(jsonData));
+
+        fetch('/api/admin/new', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(jsonData)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }else {
+                    window.location.href = '/admin';
+                }
+            })
+            .catch(error => {
+                console.error('Error updating user:', error);
+            });
+    });
+</script>
+</body>
+</html>

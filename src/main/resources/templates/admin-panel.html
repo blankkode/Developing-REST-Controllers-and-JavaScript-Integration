@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Panel</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div  th:fragment="content">
+    <h3>Admin panel</h3>
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/admin}" th:classappend="${activePage1 == 'allUser' ? 'active' : ''}">All Users</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/admin/new}" th:classappend="${activePage1 == 'newUser' ? 'active' : ''}">New User</a>
+        </li>
+    </ul>
+    <div class="container mt-3" th:replace="${content1}"></div>
+</div>
+
+</body>
+</html>
