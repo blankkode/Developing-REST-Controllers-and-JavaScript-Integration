@@ -26,19 +26,14 @@ public class RestControllerDataJpa {
         this.roleService = roleService;
     }
 
-    @GetMapping("/ret")
+    @GetMapping
     public ResponseEntity<List<User>> getAllUsers(Principal principal) {
         List<User> users = userService.getAllUsers();
         return ResponseEntity.ok(users);
     }
 
-//    @GetMapping("/new")
-//    public ResponseEntity<List<Role>> newUserForm(Principal principal) {
-//        List<Role> roles = roleService.getAllRoles();
-//        return ResponseEntity.ok(roles);
-//    }
 
-    @PostMapping("/new")
+    @PostMapping
     public ResponseEntity<User> saveUser(@RequestBody User user) {
         Set<Role> userRoles = user.getRoles().stream()
                 .map(role -> roleService.getRoleById(role.getId()))
@@ -49,7 +44,8 @@ public class RestControllerDataJpa {
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping(value="/update", consumes = {"application/json"})
+    //@PutMapping(value="/update", consumes = {"application/json"})
+    @PutMapping
     public ResponseEntity<User> updateUser(@RequestBody User user) {
 //        User user = new User();
         Set<Role> userRoles = user.getRoles().stream()
@@ -61,7 +57,7 @@ public class RestControllerDataJpa {
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping
     public ResponseEntity<Void> delUser(@RequestBody User user) {
         userService.deleteUser(user.getId());
         return ResponseEntity.noContent().build();

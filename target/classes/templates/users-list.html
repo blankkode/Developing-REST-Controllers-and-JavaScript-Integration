@@ -130,7 +130,7 @@
 <script>
     // Define fetchUsers as a global function
     window.fetchUsers = function () {
-        fetch('/api/admin/ret')
+        fetch('/api/admin')
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -254,7 +254,7 @@
         });
 
 
-        fetch('/api/admin/update', {
+        fetch('/api/admin', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -293,7 +293,7 @@
             }
         });
 
-        fetch('/api/admin/delete', {
+        fetch('/api/admin', {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
